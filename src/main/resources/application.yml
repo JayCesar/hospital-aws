@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    # O Spring injeta automaticamente os valores do JSON do segredo
+    url: jdbc:mysql:aws://${DB_HOST}:${DB_PORT}/estudo_db
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: software.aws.rds.jdbc.mysql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+# Configuração da Região (Necessário para teste local no Fedora)
+spring.cloud.aws.region.static: us-east-1

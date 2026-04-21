@@ -16,26 +16,3 @@ resource "aws_security_group" "rds_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
-resource "random_password" "password" {
-  length  = 16
-  special = true
-}
-
-resource "aws_secretsmanager_secret" "db_password" {
-  name = "rds-db-password-v2"
-}
-
-
-resource "aws_secretsmanager_secret_version" "db_password_val" {
-  secret_id     = aws_secretsmanager_secret.db_password.id
-
-  # Aqui montamos o JSON completo que o seu Driver da AWS vai ler
-  secret_string = jsonencode({
-    username = "admin"                                # Usuário que você definiu no RDS
-    password = random_password.password.result        # A senha aleatória gerada acima
-    host     = aws_db_instance.mysql_free.address        # O endpoint que o RDS vai gerar
-    port     = 3306
-    engine   = "mysql"
-  })
-}

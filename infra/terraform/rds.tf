@@ -19,3 +19,4 @@ resource "aws_db_instance" "mysql_free" {
   publicly_accessible = true
   skip_final_snapshot = true
 }
+

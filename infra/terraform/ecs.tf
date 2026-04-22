@@ -99,28 +99,6 @@ resource "aws_cloudwatch_log_group" "ecs_logs" {
   retention_in_days = 7
 }
 
-resource "aws_ecs_service" "main" {
-  name            = "hospital-service"
-  cluster         = aws_ecs_cluster.main.id
-  task_definition = aws_ecs_task_definition.app.arn
-  desired_count   = 1
-  launch_type     = "FARGATE"
-
-  network_configuration {
-    subnets          = aws_subnet.subnets[*].id
-    security_groups  = [aws_security_group.ecs_sg.id]
-    assign_public_ip = true # Necessário para baixar imagem sem NAT Gateway (Free Tier!)
-  }
-
-  load_balancer {
-    target_group_arn = aws_lb_target_group.ecs_tg.arn
-    container_name   = "hospital-container"
-    container_port   = 8080
-  }
-
-  depends_on = [aws_lb_listener.nlb_listener]
-}
-
 // ECS + NLB
 resource "aws_ecs_service" "main" {
   name            = "hospital-service"

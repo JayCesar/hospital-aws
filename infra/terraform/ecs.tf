@@ -93,6 +93,7 @@ resource "aws_ecs_task_definition" "app" {
     }
   }])
 }
+
 # Cria o grupo de logs no CloudWatch
 resource "aws_cloudwatch_log_group" "ecs_logs" {
   name              = "/ecs/hospital-api"
@@ -110,14 +111,6 @@ resource "aws_ecs_service" "main" {
   network_configuration {
     subnets          = aws_subnet.subnets[*].id
     security_groups  = [aws_security_group.ecs_sg.id]
-    assign_public_ip = true # Necessário para baixar imagem sem NAT Gateway (Free Tier!)
+    assign_public_ip = true # Mantemos true para você acessar via IP Público e para o Fargate baixar a imagem
   }
-
-  load_balancer {
-    target_group_arn = aws_lb_target_group.ecs_tg.arn
-    container_name   = "hospital-container"
-    container_port   = 8080
-  }
-
-  depends_on = [aws_lb_listener.nlb_listener]
 }

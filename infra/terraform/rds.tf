@@ -11,7 +11,7 @@ resource "aws_db_instance" "mysql_free" {
   identifier        = "rds-mysql-free"
   db_name           = "estudo_db"
   username          = "admin"
-  password          = "Xmbinha"
+  password          = "XimbinhaLindo"
 
   db_subnet_group_name   = aws_db_subnet_group.rds_subnets.name
   vpc_security_group_ids = [aws_security_group.rds_sg.id]

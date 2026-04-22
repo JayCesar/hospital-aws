@@ -1,4 +1,4 @@
-CREATE TABLE projetos_estudo (
+CREATE TABLE projetos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome_projeto VARCHAR(50) NOT NULL,
     tecnologia VARCHAR(30),

@@ -44,15 +44,13 @@ resource "aws_security_group" "ecs_sg" {
   name   = "hospital-ecs-sg"
   vpc_id = aws_vpc.main.id
 
-  # Entrada: Só aceita tráfego vindo do NLB
   ingress {
-    from_port       = 8080
-    to_port         = 8080
-    protocol        = "tcp"
-    security_groups = [aws_security_group.nlb_sg.id]
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Permite que você acesse de casa
   }
 
-  # Saída: Para falar com o RDS e baixar dependências
   egress {
     from_port   = 0
     to_port     = 0
